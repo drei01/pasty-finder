@@ -82,10 +82,12 @@ var coffee = (function () {
         },
         setLocation: function(lat,lng){
         	var l = new L.LatLng(lat,lng);
+        	if(m){
+        		map.removeLayer(m);
+        	}
             m = new L.Marker(l, {
             			icon: new redIcon()
             		});
-            map.clearLayers();
             map.addLayer(m);
             map.setView(l, 15);
 
