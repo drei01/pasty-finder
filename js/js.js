@@ -30,7 +30,7 @@ var coffee = (function () {
     fadedIcon = L.Icon.extend({
             iconUrl: 'marker-faded.png'
         });
-    var map, markers_free, markers_paid, fsq, walk_time=0, watchPosition;
+    var map, markers_free, markers_paid, fsq, walk_time=0, watchPosition, m;
     return {
         init: function () {
             map = new L.Map('map');
