@@ -50,14 +50,13 @@ var coffee = (function () {
         	if(watchPosition){
         		navigator.geolocation.clearWatch(watchPosition);
         	}
-        	var self = this;
             var q = document.getElementById('q').value;
             reqwest({
                 url: 'http://mapit.mysociety.org/postcode/' + encodeURIComponent(q),
                 type: 'json',
                 crossOrigin: true,
                 success: function (data) {
-                	self.setLocation(data.wgs84_lat, data.wgs84_lon);
+                	coffee.setLocation(data.wgs84_lat, data.wgs84_lon);
                 }
             });
             return false;
@@ -94,7 +93,7 @@ var coffee = (function () {
             var c = map.getCenter(),
                 bb = map.getBounds().toBBoxString();
             
-            fsq.search({ll: c.lat + "," + c.lng, limit: "10", query: "coffee"}, this.draw_markers);
+            fsq.search({ll: c.lat + "," + c.lng, limit: "15", query: "coffee"}, this.draw_markers);
             
             return false;
         },
@@ -112,7 +111,7 @@ var coffee = (function () {
             	var location = venue.location;
             	var mins = Math.round(location.distance/115);
             	
-            	if(walk_time!=0 && mins > walk_time){
+            	if(walk_time!=0 && mins >= walk_time){
             		return;
             	}
             	
@@ -142,7 +141,7 @@ var coffee = (function () {
             });
         },
         setDistance: function(mins){
-        	this.walk_time = mins;
+        	walk_time = mins;
         	this.lookup();
         	return false;
         }
