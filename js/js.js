@@ -30,7 +30,7 @@ var coffee = (function () {
     fadedIcon = L.Icon.extend({
             iconUrl: 'marker-faded.png'
         });
-    var map, markers_free, markers_paid, fsq, walk_time=0, watchPosition, m;
+    var map, markers_free, markers_paid, fsq, walk_time=0, watchPosition, m, _lat, _lng;
     return {
         init: function () {
             map = new L.Map('map');
@@ -70,6 +70,9 @@ var coffee = (function () {
         		});
         		
         		watchPosition = navigator.geolocation.watchPosition(function(position) {
+        			if(_lat && _lng){
+        				alert(self.lineDistance(_lat,position.coords.latitude , _lng,position.coords.longitude));
+        			}
   					self.setLocation(position.coords.latitude,position.coords.longitude);
         			self.lookup();
 				});
@@ -149,6 +152,18 @@ var coffee = (function () {
         	walk_time = mins;
         	this.lookup();
         	return false;
+        },
+        lineDistance: function(lat1,lng1 ,lat2,lng2){
+  			var xs = 0;
+  			var ys = 0;
+
+ 			xs = lat2 - lat1;
+  			xs = xs * xs;
+
+  			ys = lng2 - lng1
+  			ys = ys * ys;
+
+  			return Math.sqrt( xs + ys );
         }
     };
 })();
