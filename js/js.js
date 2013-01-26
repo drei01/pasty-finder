@@ -96,6 +96,7 @@ var coffee = (function () {
             var c = map.getCenter(),
                 bb = map.getBounds().toBBoxString();
             
+            $('.loading').show();
             fsq.search({ll: c.lat + "," + c.lng, limit: "15", query: "coffee"}, this.draw_markers);
             
             return false;
@@ -107,6 +108,7 @@ var coffee = (function () {
             map.addLayer(markers_paid);
         },
         draw_markers: function (err, data, venues) {
+        	$('.loading').hide();
             markers_free.clearLayers();
             markers_paid.clearLayers();
             var c = map.getCenter();
