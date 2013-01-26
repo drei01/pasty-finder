@@ -109,7 +109,7 @@ var coffee = (function () {
             var c = map.getCenter();
             venues.forEach(function (venue) {
             	var location = venue.location;
-            	var mins = Math.round(location.distance/115);
+            	var mins = Math.round(location.distance/83);
             	
             	if(walk_time!=0 && mins >= walk_time){
             		return;
