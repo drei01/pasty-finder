@@ -85,6 +85,7 @@ var coffee = (function () {
             m = new L.Marker(l, {
             			icon: new redIcon()
             		});
+            map.clearLayers();
             map.addLayer(m);
             map.setView(l, 15);
 
