@@ -34,7 +34,7 @@ var coffee = (function () {
     return {
         init: function () {
             map = new L.Map('map');
-            map.attributionControl.setPrefix('<a href="https://twitter.com/share" class="twitter-share-button" data-via="Matthew_Reid" data-count="none" data-dnt="true">Tweet</a>');
+            map.attributionControl.setPrefix('<a href="https://twitter.com/share" class="twitter-share-button" data-via="Matthew_Reid" data-count="none" data-dnt="true">Tweet this!</a>');
             var layer = new L.OSMTileLayer();
             map.addLayer(layer).setView(new L.LatLng(52.495578, -1.907340), 15);
             map.on('moveend', function (e) {
