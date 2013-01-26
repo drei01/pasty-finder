@@ -23,12 +23,6 @@ window.foursquare=foursquare;var foursquare=function(e){"use strict";var t={},n=
 !function(a,b){typeof module!="undefined"?module.exports=b():typeof define=="function"&&typeof define.amd=="object"?define(b):this[a]=b()}("domready",function(a){function m(a){l=1;while(a=b.shift())a()}var b=[],c,d=!1,e=document,f=e.documentElement,g=f.doScroll,h="DOMContentLoaded",i="addEventListener",j="onreadystatechange",k="readyState",l=/^loade|c/.test(e[k]);return e[i]&&e[i](h,c=function(){e.removeEventListener(h,c,d),m()},d),g&&e.attachEvent(j,c=function(){/^c/.test(e[k])&&(e.detachEvent(j,c),m())}),a=g?function(c){self!=top?l?c():b.push(c):function(){try{f.doScroll("left")}catch(b){return setTimeout(function(){a(c)},50)}c()}()}:function(a){l?a():b.push(a)}})
 L.OSMTileLayer=L.TileLayer.extend({initialize:function(name){var url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";L.TileLayer.prototype.initialize.call(this,url,{"minZoom":7,"maxZoom":16,"attribution":'Map data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'});}});
 
-if (typeof(Number.prototype.toRad) === "undefined") {
-  Number.prototype.toRad = function() {
-    return this * Math.PI / 180;
-  }
-}
-
 var coffee = (function () {
     var redIcon = L.Icon.extend({
         iconUrl: 'js/leaflet/images/marker-red.png'
@@ -76,8 +70,9 @@ var coffee = (function () {
         		});
         		
         		watchPosition = navigator.geolocation.watchPosition(function(position) {
-        			if(_lat && _lng){
-        				alert(self.lineDistance(_lat,position.coords.latitude , _lng,position.coords.longitude));
+        			if(_lat && _lng 
+        			&& self.lineDistance(_lat,position.coords.latitude , _lng,position.coords.longitude)<100){
+        				return;
         			}
   					self.setLocation(position.coords.latitude,position.coords.longitude);
         			self.lookup();
@@ -162,16 +157,16 @@ var coffee = (function () {
         	return false;
         },
         lineDistance: function(lat1,lng1 ,lat2,lng2){
-  			var R = 6371; // km
-			var dLat = (lat2-lat1).toRad();
-			var dLon = (lon2-lon1).toRad();
-			var lat1 = lat1.toRad();
-			var lat2 = lat2.toRad();
+  			var xs = 0;
+  			var ys = 0;
 
-			var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        	Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-			return R * c;
+ 			xs = lat2 - lat1;
+  			xs = xs * xs;
+
+  			ys = lng2 - lng1
+  			ys = ys * ys;
+
+  			return Math.sqrt( xs + ys );
         }
     };
 })();
