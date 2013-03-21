@@ -36,7 +36,11 @@ var coffee = (function () {
             map = new L.Map('map');
             map.attributionControl.setPrefix('<a href="https://twitter.com/share" class="twitter-share-button" data-via="Matthew_Reid" data-count="none" data-dnt="true" data-text="Found a brew with #coffeemaps" url="'+location.href+'">Tweet this!</a>');
             var layer = new L.OSMTileLayer();
-            map.addLayer(layer).setView(new L.LatLng(52.495578, -1.907340), 15);
+            var pos = {lat:0,long:0};
+            if (typeof com != 'undefined'){
+            	pos = com.unitedCoders.geo.ll[0];
+            }
+            map.addLayer(layer).setView(new L.LatLng(pos.lat,pos.long), 15);
             map.on('moveend', function (e) {
                 coffee.lookup();
             });
@@ -67,7 +71,7 @@ var coffee = (function () {
       			navigator.geolocation.getCurrentPosition(function(position){
         			self.setLocation(position.coords.latitude,position.coords.longitude);
         			self.lookup();
-        		});
+        		},{maximumAge:600000, timeout:10000});
         		
         		watchPosition = navigator.geolocation.watchPosition(function(position) {
         			if(_lat && _lng 
@@ -77,11 +81,10 @@ var coffee = (function () {
   					self.setLocation(position.coords.latitude,position.coords.longitude);
         			self.lookup();
 				});
-      		} else {
-      			if ((typeof google == 'object') && google.loader && google.loader.ClientLocation) {
-      				self.setLocation(google.loader.ClientLocation.latitude,google.loader.ClientLocation.longitude);
-      				self.lookup();
-      			}
+      		} else if (typeof com != 'undefined'){
+      			var pos = com.unitedCoders.geo.ll[0];
+      			self.setLocation(pos.lat,pos.long);
+      			self.lookup();
       		}
         },
         setLocation: function(lat,lng){
