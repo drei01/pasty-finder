@@ -71,7 +71,15 @@ var coffee = (function () {
       			navigator.geolocation.getCurrentPosition(function(position){
         			self.setLocation(position.coords.latitude,position.coords.longitude);
         			self.lookup();
-        		},{maximumAge:600000, timeout:10000});
+        		},
+        		function(error){
+        			if (typeof com != 'undefined'){
+		      			var pos = com.unitedCoders.geo.ll[0];
+		      			self.setLocation(pos.lat,pos.long);
+		      			self.lookup();
+		      		}
+        		},
+        		{maximumAge:600000, timeout:10000});
         		
         		watchPosition = navigator.geolocation.watchPosition(function(position) {
         			if(_lat && _lng 
