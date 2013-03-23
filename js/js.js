@@ -54,12 +54,14 @@ var coffee = (function () {
         	if(watchPosition){
         		navigator.geolocation.clearWatch(watchPosition);
         	}
+        	$('.loading').show();
             var q = document.getElementById('q').value;
             reqwest({
                 url: 'http://mapit.mysociety.org/postcode/' + encodeURIComponent(q),
                 type: 'json',
                 crossOrigin: true,
                 success: function (data) {
+                	$('.loading').hide();
                 	coffee.setLocation(data.wgs84_lat, data.wgs84_lon);
                 }
             });
