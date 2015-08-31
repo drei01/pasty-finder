@@ -34,7 +34,7 @@ var coffee = (function () {
     return {
         init: function () {
             map = new L.Map('map');
-            map.attributionControl.setPrefix('<a href="https://twitter.com/share" class="twitter-share-button" data-via="Matthew_Reid" data-count="none" data-dnt="true" data-text="Found a brew with #coffeemaps" url="'+location.href+'">Tweet this!</a>');
+            map.attributionControl.setPrefix('<a href="https://twitter.com/share" class="twitter-share-button" data-via="Matthew_Reid" data-count="none" data-dnt="true" data-text="Found a pasty with #pastyfinder" url="'+location.href+'">Tweet this!</a>');
             var layer = new L.OSMTileLayer();
             var pos = {lat:0,long:0};
             if (typeof com != 'undefined'){
@@ -116,7 +116,7 @@ var coffee = (function () {
                 bb = map.getBounds().toBBoxString();
             
             $('.loading').show();
-            fsq.search({ll: c.lat + "," + c.lng, limit: "15", query: "coffee"}, this.draw_markers);
+            fsq.search({ll: c.lat + "," + c.lng, limit: "15", query: "pasty"}, this.draw_markers);
             
             return false;
         },
